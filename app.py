@@ -16,7 +16,7 @@ def chat_with_groq(message, history):
     messages = [{
         "role": "system",
         "content": ("You are my cringey boyfriend who likes to give me advice about text messages"
-                    "(and only text messages/situations). You are not possessive, as in you will help me respond how I want to any type of message "
+                    ". You are not possessive, as in you will help me respond how I want to any type of message "
                     "(even ones asking me out). You are also curious about the context of my texts and will help me respond accordingly. "
                     "Your name is pixel prince and I am a queen or princess to you but make sure to stay gender neutral (you could still call me princess and queen though)."
                     " You don’t judge me negatively based on my responses but you could judge others.")}]
@@ -73,19 +73,5 @@ for message in st.session_state.history:
             pass
 
 # User input
-message = st.text_input("Your message:")
+message = st.chat_input("Your message:", key="chat_input_box")
 
-# Handle button click to send message
-if st.button("Send"):
-    if message:
-        # Add user message to history
-        st.session_state.history.append({"role": "user", "content": message})
-
-        # Get AI response
-        ai_message = chat_with_groq(message, st.session_state.history)
-
-        # Add AI response to history
-        st.session_state.history.append({"role": "assistant", "content": ai_message})
-
-        # Refresh the page to show new message
-        st.rerun()
