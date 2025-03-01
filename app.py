@@ -3,6 +3,7 @@ import streamlit as st
 from groq import Groq
 from dotenv import load_dotenv
 
+
 # Load environment variables
 load_dotenv()
 
@@ -69,23 +70,27 @@ for message in st.session_state.history:
             st.markdown(f"<div style='text-align: right; font-weight: bold;'>You</div>", unsafe_allow_html=True)
             st.markdown(f"<div style='text-align: right;'>{message['content']}</div>", unsafe_allow_html=True)
         with col2:
-            # Leave the second column empty
+            # no pfp for 
             pass
 
 # User input
-message = st.text_input("Your message:")
+
+
+# User input
+message = st.chat_input("Your message:", key="chat_input_box")
 
 # Handle button click to send message
-if st.button("Send"):
-    if message:
-        # Add user message to history
-        st.session_state.history.append({"role": "user", "content": message})
+if message:
+    # Add user message to history
+    st.session_state.history.append({"role": "user", "content": message})
 
-        # Get AI response
-        ai_message = chat_with_groq(message, st.session_state.history)
+    # Get AI response
+    ai_message = chat_with_groq(message, st.session_state.history)
 
-        # Add AI response to history
-        st.session_state.history.append({"role": "assistant", "content": ai_message})
+    # Add AI response to history
+    st.session_state.history.append({"role": "assistant", "content": ai_message})
 
-        # Refresh the page to show new message
-        st.rerun()
+    #st.session_state.selected_prompt = None
+
+    # Refresh the page to show new message
+    st.rerun() 
